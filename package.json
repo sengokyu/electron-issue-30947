@@ -12,6 +12,6 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^19.0.0-alpha.4"
+    "electron-nightly": "^20.0.0-nightly.20220421"
   }
 }
