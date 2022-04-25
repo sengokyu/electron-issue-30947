@@ -1,0 +1,30 @@
+# This is a basic workflow that is manually triggered
+
+name: Execute Electron App
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  push:
+    branches:
+      - main
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  pacakge-electron:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: "npm"
+      - run: npm install
+      - run: npm run start
+      - name: Upload to release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "./result.pdf"
+          artifactContentType: application/pdf
+          token: ${{ secrets.GITHUB_TOKEN }}
