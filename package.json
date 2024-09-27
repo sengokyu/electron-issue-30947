@@ -1,6 +1,6 @@
 {
   "name": "electron-issue-30947",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Re produce code of issue #30947",
   "main": "index.js",
   "scripts": {
@@ -12,6 +12,6 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "electron-nightly": "^20.0.0-nightly.20220421"
+    "electron-nightly": "^34.0.0-nightly.20240926"
   }
 }
