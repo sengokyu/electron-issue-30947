@@ -3,25 +3,30 @@ const { app, BrowserWindow } = require("electron");
 
 const OUTPUT_PDF = "result.pdf";
 
-const createWindow = () => {
+const createWindow = async () => {
   const win = new BrowserWindow({ show: false });
 
-  win.webContents.on("did-finish-load", () => {
-    win.webContents
-      .printToPDF({ pageRanges: { from: 0, to: 0 } })
-      .then(async (buf) => {
-        await writeFile(OUTPUT_PDF, buf);
-        process.exit();
+  win.webContents.on("-pdf-ready-to-print", async () => {
+    try {
+      const buf = await win.webContents.printToPDF({
+        margins: { marginType: "default" },
       });
+
+      await writeFile(OUTPUT_PDF, buf, { flush: true });
+    } catch (err) {
+      console.error(err);
+    }
+
+    process.exit();
   });
 
   const pdfurl = "data:application/pdf;base64," + INPUT_PDF.replace("\n", "");
 
-  win.loadURL(pdfurl);
+  await win.loadURL(pdfurl);
 };
 
-app.whenReady().then(() => {
-  createWindow();
+app.whenReady().then(async () => {
+  await createWindow();
 });
 
 const INPUT_PDF = `JVBERi0xLjYKJcOkw7zDtsOfCjIgMCBvYmoKPDwvTGVuZ3RoIDMgMCBSL0ZpbHRlci9GbGF0ZURl
