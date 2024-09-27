@@ -1,4 +1,4 @@
-# Electron issue #30947
+# Electron issue #30947 fixed.
 
 ## About
 
